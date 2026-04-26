@@ -198,3 +198,39 @@ ul.features-list li { margin-bottom: 6px; }
     .contact-btn { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.15); color: #1a1f3a; }
     .contact-btn:hover { background: rgba(0,0,0,0.1); }
 }
+/* ✅ Принудительные темы через data-theme */
+:root[data-theme="dark"] {
+  --bg-main: linear-gradient(135deg, #0B101E 0%, #1a1f3a 100%);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.6);
+  --section-bg: rgba(255, 255, 255, 0.05);
+  --section-border: rgba(255, 255, 255, 0.1);
+  --feature-bg: rgba(255, 255, 255, 0.03);
+  --feature-hover: rgba(255, 255, 255, 0.06);
+  --feature-expanded: rgba(255, 255, 255, 0.08);
+  --contact-bg: rgba(255, 255, 255, 0.1);
+  --contact-hover: rgba(255, 255, 255, 0.2);
+}
+
+:root[data-theme="light"] {
+  --bg-main: linear-gradient(135deg, #F0F4F8 0%, #e8eef5 100%);
+  --text-primary: #1a1f3a;
+  --text-secondary: rgba(26, 31, 58, 0.6);
+  --section-bg: rgba(255, 255, 255, 0.85);
+  --section-border: rgba(0, 0, 0, 0.1);
+  --feature-bg: rgba(255, 255, 255, 0.6);
+  --feature-hover: rgba(255, 255, 255, 0.9);
+  --feature-expanded: #ffffff;
+  --contact-bg: rgba(0, 0, 0, 0.05);
+  --contact-hover: rgba(0, 0, 0, 0.1);
+}
+
+/* Применяем переменные */
+body { background: var(--bg-main); color: var(--text-primary); }
+.section { background: var(--section-bg); border-color: var(--section-border); }
+.feature { background: var(--feature-bg); }
+.feature:hover { background: var(--feature-hover); }
+.feature.expanded { background: var(--feature-expanded); }
+.short-desc, .full-desc { color: var(--text-secondary); }
+.contact-btn { background: var(--contact-bg); }
+.contact-btn:hover { background: var(--contact-hover); }
