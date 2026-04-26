@@ -142,5 +142,14 @@
             });
         }
     </script>
+    <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const theme = params.get('theme');
+    if (theme === 'light' || theme === 'dark') {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+  });
+</script>
 </body>
 </html>
