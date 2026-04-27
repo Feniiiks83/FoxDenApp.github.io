@@ -86,106 +86,50 @@
         </footer>
     </div>
 
-    <!-- 🔒 ВСТРОЕННЫЙ ЛОГГЕР (клиентский) -->
     <script>
-    (function() {
-        const LOG_KEY = 'nfox_access_logs';
-        const EXEMPT_KEY = 'nfox_exempt_devices';
-        const IP_API = 'https://api.ipify.org?format=json';
+(function() {
+  // 🔧 УКАЖИТЕ ВАШ УРЛ СЕРВЕРА И КЛЮЧ ИЗ .env
+  const SERVER_URL = 'https://ваш-сервер.onrender.com'; // или .replit.dev
+  const API_KEY = 'ваш_секретный_ключ_тут';
+  const EXEMPT_KEY = 'nfox_exempt_devices_local';
 
-        // Простой fingerprint устройства
-        function getDeviceId() {
-            const raw = [navigator.userAgent, screen.width, screen.height, navigator.language, Intl.DateTimeFormat().resolvedOptions().timeZone].join('|');
-            // Базовая хеш-имитация через btoa (не крипто, но уникальна для связки)
-            return btoa(unescape(encodeURIComponent(raw))).replace(/[^A-Za-z0-9]/g, '').substring(0, 24);
-        }
+  function getDeviceId() {
+    const raw = navigator.userAgent + screen.width + screen.height + navigator.language;
+    return btoa(unescape(encodeURIComponent(raw))).replace(/[^A-Za-z0-9]/g, '').substring(0, 24);
+  }
 
-        function getTimestamp() {
-            return new Date().toLocaleString('ru-RU');
-        }
+  async function fetchIP() {
+    try {
+      const r = await fetch('https://api.ipify.org?format=json');
+      return (await r.json()).ip;
+    } catch { return 'Offline'; }
+  }
 
-        async function fetchIP() {
-            try {
-                const res = await fetch(IP_API, { cache: 'no-store' });
-                const data = await res.json();
-                return data.ip || 'Unknown';
-            } catch {
-                return 'Offline/Blocked';
-            }
-        }
+  function isExempt() {
+    const list = JSON.parse(localStorage.getItem(EXEMPT_KEY) || '[]');
+    return list.includes(getDeviceId());
+  }
 
-        function isExempt(deviceId) {
-            const exempt = JSON.parse(localStorage.getItem(EXEMPT_KEY) || '[]');
-            return exempt.includes(deviceId);
-        }
+  async function sendLog() {
+    if (isExempt()) return;
+    const deviceId = getDeviceId();
+    const ip = await fetchIP();
+    const timestamp = new Date().toLocaleString('ru-RU');
 
-        function addExemption(deviceId) {
-            const exempt = JSON.parse(localStorage.getItem(EXEMPT_KEY) || '[]');
-            if (!exempt.includes(deviceId)) {
-                exempt.push(deviceId);
-                localStorage.setItem(EXEMPT_KEY, JSON.stringify(exempt));
-            }
-        }
+    try {
+      await fetch(`${SERVER_URL}/log`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-api-key': API_KEY },
+        body: JSON.stringify({ ip, ua: navigator.platform, deviceId, timestamp }),
+        keepalive: true
+      });
+    } catch(e) { console.warn('🔇 Logger failed:', e); }
+  }
 
-        function logEntry(entry) {
-            const logs = JSON.parse(localStorage.getItem(LOG_KEY) || '[]');
-            logs.unshift(entry);
-            // Храним последние 500 записей, чтобы не перегружать память
-            if (logs.length > 500) logs.length = 500;
-            localStorage.setItem(LOG_KEY, JSON.stringify(logs));
-        }
-
-        function downloadFile(filename, content) {
-            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
-        }
-
-        // Главная функция логирования
-        async function initLogger() {
-            const deviceId = getDeviceId();
-            if (isExempt(deviceId)) {
-                console.log('🔇 Логирование отключено для этого устройства.');
-                return;
-            }
-
-            const ip = await fetchIP();
-            const timestamp = getTimestamp();
-            const entry = `[${timestamp}] | IP: ${ip} | UA: ${navigator.platform} | DevID: ${deviceId}`;
-            logEntry(entry);
-            console.log('📝 Записан вход:', entry);
-        }
-
-        // Публичный API для управления (вызывать в консоли браузера)
-        window.NFoxLogger = {
-            downloadLogs: () => {
-                const logs = JSON.parse(localStorage.getItem(LOG_KEY) || '[]');
-                const content = logs.length ? logs.join('\n') : 'Логи пусты.';
-                downloadFile('nfox_access_logs.txt', content);
-            },
-            downloadExemptions: () => {
-                const exempt = JSON.parse(localStorage.getItem(EXEMPT_KEY) || '[]');
-                const content = exempt.length ? exempt.join('\n') : 'Список исключений пуст.';
-                downloadFile('nfox_exempt_devices.txt', content);
-            },
-            addExemption: addExemption,
-            getCurrentDeviceId: getDeviceId,
-            clearLogs: () => localStorage.removeItem(LOG_KEY),
-            clearExemptions: () => localStorage.removeItem(EXEMPT_KEY)
-        };
-
-        // Запуск при загрузке страницы
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initLogger);
-        } else {
-            initLogger();
-        }
-    })();
-    </script>
+  document.readyState === 'loading' 
+    ? document.addEventListener('DOMContentLoaded', sendLog) 
+    : sendLog();
+})();
+</script>
 </body>
 </html>
