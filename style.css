@@ -4,7 +4,7 @@
   /* Только тёмная тема */
   --bg-gradient: linear-gradient(135deg, #0B101E 0%, #1a1f3a 100%);
   --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.65);a
+  --text-secondary: rgba(255, 255, 255, 0.65);
   --section-bg: rgba(255, 255, 255, 0.05);
   --section-border: rgba(255, 255, 255, 0.1);
   --feature-bg: rgba(255, 255, 255, 0.03);
