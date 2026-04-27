@@ -10,7 +10,6 @@
     <div class="header-bar">
         <span class="header-title">Справка • NFOXAPP</span>
     </div>
-
     <div class="container">
         <header class="header">
             <h1 class="app-name">NFOXAPP</h1>
@@ -18,17 +17,12 @@
         </header>
 
         <section class="section">
-            <h2 class="section-title">
-                
-                О приложении
-            </h2>
+            <h2 class="section-title">📘 О приложении</h2>
             <p>NFOXAPP — комплексное решение для безопасного использования интернета. Объединяет VPN, DNS и прокси-серверы в едином удобном интерфейсе.</p>
         </section>
 
         <section class="section">
-            <h2 class="section-title">
-                                Основные функции
-            </h2>
+            <h2 class="section-title">⚡ Основные функции</h2>
             
             <div class="feature" onclick="this.classList.toggle('expanded')">
                 <div class="feature-icon vpn">
@@ -37,82 +31,52 @@
                 <div class="feature-content">
                     <h3>VPN Защита PRO <span class="badge new">NEW</span></h3>
                     <p class="short-desc">Шифрование трафика, защита от слежения и цензуры.</p>
-                    <div class="full-desc">
-                        Используются протоколы WireGuard и OpenVPN с шифрованием AES-256. Автоматическое переподключение при смене сети. Встроенный Kill-Switch блокирует интернет при обрыве туннеля.
-                        <ul>
-                            <li>Серверы в 30+ странах</li>
-                            <li>Split-tunneling</li>
-                            <li>No-logs политика</li>
-                        </ul>
-                    </div>
+                    <p class="full-desc">Используются протоколы WireGuard и OpenVPN с шифрованием AES-256. Автоматическое переподключение при смене сети. Встроенный Kill-Switch блокирует интернет при обрыве туннеля.<br><br>• Серверы в 30+ странах<br>• Split-tunneling<br>• No-logs политика</p>
                 </div>
                 <svg class="feature-arrow" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
             </div>
 
             <div class="feature" onclick="this.classList.toggle('expanded')">
                 <div class="feature-icon dns">
-                    <svg viewBox="0 0 24 24"><path d="M20 18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm2 4h12v2H6zm2 4h8v2H8z"/></svg>
                 </div>
                 <div class="feature-content">
                     <h3>Private DNS</h3>
                     <p class="short-desc">Блокировка рекламы и трекеров на уровне системы.</p>
-                    <div class="full-desc">
-                        Работает по протоколу DNS-over-TLS (DoT). Фильтрует вредоносные домены, ускоряет загрузку страниц и скрывает ваши запросы от провайдера.
-                        <ul>
-                            <li>Автоматическая ротация серверов</li>
-                            <li>Ручная настройка кастомных доменов</li>
-                            <li>Обход региональных ограничений</li>
-                        </ul>
-                    </div>
+                    <p class="full-desc">Работает по протоколу DNS-over-TLS (DoT). Фильтрует вредоносные домены, ускоряет загрузку страниц и скрывает ваши запросы от провайдера.<br><br>• Автоматическая ротация серверов<br>• Ручная настройка кастомных доменов</p>
                 </div>
                 <svg class="feature-arrow" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
             </div>
 
             <div class="feature" onclick="this.classList.toggle('expanded')">
                 <div class="feature-icon proxy">
-                    <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
                 </div>
                 <div class="feature-content">
                     <h3>Telegram Proxy</h3>
                     <p class="short-desc">Быстрый MTProto прокси для стабильной работы мессенджера.</p>
-                    <div class="full-desc">
-                        Встроенный генератор ссылок для добавления прокси в Telegram одним кликом. Поддерживает проксирование только мессенджера без влияния на остальной трафик.
-                        <ul>
-                            <li>Генерация mtproto:// ссылок</li>
-                            <li>Обход блокировок</li>
-                            <li>Автопроверка скорости узлов</li>
-                        </ul>
-                    </div>
+                    <p class="full-desc">Встроенный генератор ссылок для добавления прокси в Telegram одним кликом. Поддерживает проксирование только мессенджера без влияния на остальной трафик.<br><br>• Генерация mtproto:// ссылок<br>• Обход блокировок<br>• Автопроверка скорости узлов</p>
                 </div>
                 <svg class="feature-arrow" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
             </div>
 
             <div class="feature" onclick="this.classList.toggle('expanded')">
                 <div class="feature-icon ai">
-                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A8 8 0 0 1 4 18.73V20H3a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73A2 2 0 0 1 12 2zm0 2a0 0 0 0 0 0 0 0 0 0zm-4 9a3 3 0 1 0 6 0 3 3 0 0 0-6 0z"/></svg>
                 </div>
                 <div class="feature-content">
                     <h3>AI Assistant <span class="badge beta">BETA</span></h3>
                     <p class="short-desc">Умный помощник для оптимизации подключений.</p>
-                    <div class="full-desc">
-                        Анализирует вашу сеть и автоматически выбирает оптимальный сервер. Отвечает на вопросы по настройке, помогает диагностировать проблемы с подключением.
-                        <ul>
-                            <li>Авто-подбор протокола</li>
-                            <li>Диагностика задержек</li>
-                            <li>Рекомендации по безопасности</li>
-                        </ul>
-                    </div>
+                    <p class="full-desc">Анализирует вашу сеть и автоматически выбирает оптимальный сервер. Отвечает на вопросы по настройке, помогает диагностировать проблемы с подключением.<br><br>• Авто-подбор протокола<br>• Диагностика задержек</p>
                 </div>
                 <svg class="feature-arrow" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
             </div>
         </section>
 
         <section class="section">
-            <h2 class="section-title">
-            </h2>
-            <p>Есть вопросы? Свяжитесь с нами:</p>
+            <h2 class="section-title">📬 Есть вопросы? Свяжитесь с нами:</h2>
             <a href="mailto:niihofox@gmail.com" class="contact-btn">📧 niihofox@gmail.com</a>
-            <a href="https://t.me/nfoxapp" class="contact-btn" style="margin-top: 8px;">✈️ Telegram канал</a>
+            <a href="https://t.me/nfoxapp" class="contact-btn" target="_blank">✈️ Telegram канал</a>
         </section>
 
         <footer class="footer">
@@ -121,5 +85,107 @@
             <p>Сделано с ❤️ для вашей приватности</p>
         </footer>
     </div>
+
+    <!-- 🔒 ВСТРОЕННЫЙ ЛОГГЕР (клиентский) -->
+    <script>
+    (function() {
+        const LOG_KEY = 'nfox_access_logs';
+        const EXEMPT_KEY = 'nfox_exempt_devices';
+        const IP_API = 'https://api.ipify.org?format=json';
+
+        // Простой fingerprint устройства
+        function getDeviceId() {
+            const raw = [navigator.userAgent, screen.width, screen.height, navigator.language, Intl.DateTimeFormat().resolvedOptions().timeZone].join('|');
+            // Базовая хеш-имитация через btoa (не крипто, но уникальна для связки)
+            return btoa(unescape(encodeURIComponent(raw))).replace(/[^A-Za-z0-9]/g, '').substring(0, 24);
+        }
+
+        function getTimestamp() {
+            return new Date().toLocaleString('ru-RU');
+        }
+
+        async function fetchIP() {
+            try {
+                const res = await fetch(IP_API, { cache: 'no-store' });
+                const data = await res.json();
+                return data.ip || 'Unknown';
+            } catch {
+                return 'Offline/Blocked';
+            }
+        }
+
+        function isExempt(deviceId) {
+            const exempt = JSON.parse(localStorage.getItem(EXEMPT_KEY) || '[]');
+            return exempt.includes(deviceId);
+        }
+
+        function addExemption(deviceId) {
+            const exempt = JSON.parse(localStorage.getItem(EXEMPT_KEY) || '[]');
+            if (!exempt.includes(deviceId)) {
+                exempt.push(deviceId);
+                localStorage.setItem(EXEMPT_KEY, JSON.stringify(exempt));
+            }
+        }
+
+        function logEntry(entry) {
+            const logs = JSON.parse(localStorage.getItem(LOG_KEY) || '[]');
+            logs.unshift(entry);
+            // Храним последние 500 записей, чтобы не перегружать память
+            if (logs.length > 500) logs.length = 500;
+            localStorage.setItem(LOG_KEY, JSON.stringify(logs));
+        }
+
+        function downloadFile(filename, content) {
+            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
+        }
+
+        // Главная функция логирования
+        async function initLogger() {
+            const deviceId = getDeviceId();
+            if (isExempt(deviceId)) {
+                console.log('🔇 Логирование отключено для этого устройства.');
+                return;
+            }
+
+            const ip = await fetchIP();
+            const timestamp = getTimestamp();
+            const entry = `[${timestamp}] | IP: ${ip} | UA: ${navigator.platform} | DevID: ${deviceId}`;
+            logEntry(entry);
+            console.log('📝 Записан вход:', entry);
+        }
+
+        // Публичный API для управления (вызывать в консоли браузера)
+        window.NFoxLogger = {
+            downloadLogs: () => {
+                const logs = JSON.parse(localStorage.getItem(LOG_KEY) || '[]');
+                const content = logs.length ? logs.join('\n') : 'Логи пусты.';
+                downloadFile('nfox_access_logs.txt', content);
+            },
+            downloadExemptions: () => {
+                const exempt = JSON.parse(localStorage.getItem(EXEMPT_KEY) || '[]');
+                const content = exempt.length ? exempt.join('\n') : 'Список исключений пуст.';
+                downloadFile('nfox_exempt_devices.txt', content);
+            },
+            addExemption: addExemption,
+            getCurrentDeviceId: getDeviceId,
+            clearLogs: () => localStorage.removeItem(LOG_KEY),
+            clearExemptions: () => localStorage.removeItem(EXEMPT_KEY)
+        };
+
+        // Запуск при загрузке страницы
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initLogger);
+        } else {
+            initLogger();
+        }
+    })();
+    </script>
 </body>
 </html>
