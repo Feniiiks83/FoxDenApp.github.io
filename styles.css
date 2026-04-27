@@ -1,5 +1,4 @@
 :root {
-  /* Базовые переменные (светлая тема по умолчанию) */
   --bg-gradient: linear-gradient(135deg, #F0F4F8 0%, #e8eef5 100%);
   --text-primary: #1a1f3a;
   --text-secondary: rgba(26, 31, 58, 0.65);
@@ -11,6 +10,10 @@
   --contact-bg: rgba(0, 0, 0, 0.05);
   --contact-hover: rgba(0, 0, 0, 0.1);
   --toggle-bg: rgba(0, 0, 0, 0.05);
+  --header-bg: rgba(255, 255, 255, 0.95);
+  --header-border: rgba(0, 0, 0, 0.1);
+  --close-btn-bg: #ff4444;
+  --close-btn-hover: #cc0000;
   --shadow: 0 4px 12px rgba(0,0,0,0.08);
   --badge-new-bg: #4CAF50;
   --badge-beta-bg: #FF9800;
@@ -32,6 +35,10 @@
   --contact-bg: rgba(255, 255, 255, 0.1);
   --contact-hover: rgba(255, 255, 255, 0.2);
   --toggle-bg: rgba(255, 255, 255, 0.1);
+  --header-bg: rgba(26, 31, 58, 0.95);
+  --header-border: rgba(255, 255, 255, 0.1);
+  --close-btn-bg: #ff5252;
+  --close-btn-hover: #ff1744;
   --shadow: 0 4px 16px rgba(0,0,0,0.4);
   --badge-new-bg: #4CAF50;
   --badge-beta-bg: #FF9800;
@@ -49,6 +56,7 @@ body {
   color: var(--text-primary);
   min-height: 100vh;
   padding: clamp(12px, 3vw, 24px);
+  padding-top: 72px; /* ✅ Отступ под фиксированный хедер */
   line-height: 1.6;
   transition: background 0.3s ease, color 0.3s ease;
   -webkit-tap-highlight-color: transparent;
@@ -60,12 +68,69 @@ body {
   margin: 0 auto;
 }
 
+/* === Фиксированный хедер с кнопкой закрытия === */
+.header-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--header-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 1000;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow);
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.header-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* === Кнопка закрытия — яркая и заметная === */
+.close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--close-btn-bg);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+.close-btn:hover {
+  background: var(--close-btn-hover);
+  transform: scale(1.05);
+}
+.close-btn:active {
+  transform: scale(0.95);
+}
+.close-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: #ffffff;
+}
+
+/* === Остальные стили (адаптированы под новый хедер) === */
 .header {
-  position: relative;
   text-align: center;
-  padding: 30px 0 20px;
+  padding: 24px 0 16px;
   border-bottom: 1px solid var(--section-border);
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .app-name {
@@ -85,30 +150,6 @@ body {
   text-transform: uppercase;
 }
 
-/* === Переключатель темы === */
-.theme-toggle {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--toggle-bg);
-  border: 1px solid var(--section-border);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.25s ease;
-}
-.theme-toggle:hover { background: var(--contact-hover); transform: scale(1.05); }
-.theme-toggle:active { transform: scale(0.95); }
-.theme-toggle svg { width: 20px; height: 20px; fill: var(--text-primary); transition: transform 0.3s ease; }
-.icon-sun, .icon-moon { display: none; }
-[data-theme="dark"] .icon-sun { display: block; }
-[data-theme="light"] .icon-moon { display: block; }
-
-/* === Секции === */
 .section {
   background: var(--section-bg);
   backdrop-filter: blur(12px);
@@ -133,7 +174,6 @@ body {
 .section-title svg { width: 20px; height: 20px; color: var(--text-secondary); }
 .section-title span.sub { font-size: 12px; color: var(--text-secondary); font-weight: 400; margin-left: auto; }
 
-/* === Раскрывающиеся функции === */
 .feature {
   display: flex;
   align-items: flex-start;
@@ -185,7 +225,6 @@ body {
 }
 .feature.expanded .feature-arrow { transform: rotate(180deg); fill: #4CAF50; }
 
-/* === Контакты & Футер === */
 .version-info { text-align: center; padding: 16px; color: var(--text-secondary); font-size: 13px; }
 .footer { text-align: center; padding: 20px 0; color: var(--text-secondary); opacity: 0.7; font-size: 12px; }
 .contact-btn {
@@ -196,7 +235,6 @@ body {
 }
 .contact-btn:hover { background: var(--contact-hover); transform: translateY(-1px); }
 
-/* Адаптив для очень маленьких экранов */
 @media (max-width: 360px) {
   .feature { flex-direction: column; align-items: center; text-align: center; }
   .feature-content { width: 100%; }
