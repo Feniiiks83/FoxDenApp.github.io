@@ -61,7 +61,7 @@ func Run(cfg *config.Config) {
 	}
 
 	app.Use(cors.New(cors.Config{
-		AllowOrigins:     "http://localhost:8080",
+		AllowOrigins:     "http://localhost:2000",
 		AllowCredentials: true,
 	}))
 	app.Use(swagger.New(swaggerCfg))
@@ -69,7 +69,7 @@ func Run(cfg *config.Config) {
 	http := http.Init(services, app)
 
 	http.Start()
-	app.Get("/docs/*", swagger.New(swaggerCfg))
+	// app.Get("/docs/*", swagger.New(swaggerCfg))
 
 	app.Listen(cfg.HTTPServer.Address)
 }

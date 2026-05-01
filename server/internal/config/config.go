@@ -45,9 +45,9 @@ type Storage struct {
 // }
 
 type HTTPServer struct {
-	Address     string        `yaml:"address" env-default:"localhost:8080"`
-	Timeout     time.Duration `yaml:"timeout" env-default:"4s"`
-	IdleTimeout time.Duration `yaml:"idle_timeout" env-default:"60s"`
+	Address     string        `yaml:"http_address" env-default:"localhost:8080"`
+	Timeout     time.Duration `yaml:"http_timeout" env-default:"4s"`
+	IdleTimeout time.Duration `yaml:"http_idle_timeout" env-default:"60s"`
 }
 
 // type JWT struct {
