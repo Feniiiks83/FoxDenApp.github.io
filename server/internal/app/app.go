@@ -13,6 +13,8 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 
 	"github.com/gofiber/fiber/v2"
+
+	_ "foxDenApp/docs"
 )
 
 // @securityDefinitions.apikey ApiKeyAuth
@@ -50,24 +52,24 @@ func Run(cfg *config.Config) {
 		WriteTimeout:  cfg.HTTPServer.Timeout,
 		IdleTimeout:   cfg.HTTPServer.IdleTimeout,
 	})
-
+	app.Use(middleware.NewLogger(logger))
 	swaggerCfg := swagger.Config{
 		BasePath: "/api",
 		FilePath: "./docs/swagger.json",
-		Path:     "docs",
+		Path:     "/docs",
 		Title:    "Swagger API Docs",
 	}
 
 	app.Use(cors.New(cors.Config{
-		AllowOrigins:     "http://localhost:3000",
+		AllowOrigins:     "http://localhost:8080",
 		AllowCredentials: true,
 	}))
 	app.Use(swagger.New(swaggerCfg))
-	app.Use(middleware.NewLogger(logger))
 
 	http := http.Init(services, app)
 
 	http.Start()
+	app.Get("/docs/*", swagger.New(swaggerCfg))
 
 	app.Listen(cfg.HTTPServer.Address)
 }

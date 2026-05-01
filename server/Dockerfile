@@ -1,6 +1,9 @@
 FROM golang:latest
 
-WORKDIR /server
+WORKDIR /fox
+
+COPY go.mod go.sum ./
+RUN go mod download
 
 COPY . .
 

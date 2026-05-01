@@ -1,8 +1,0 @@
-info:
-  contact: {}
-  description: API Server for hackaton application that supplies service for operate
-    debtors in db
-  title: Tax Parser API
-  version: "0.4"
-paths: {}
-swagger: "2.0"
