@@ -1,0 +1,992 @@
+definitions:
+  adminControllerDto.ActivateAdminAccountDto:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      token:
+        type: string
+    type: object
+  adminControllerDto.AuthorizationBody:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  adminControllerDto.AuthorizationResponse:
+    properties:
+      payload:
+        $ref: '#/definitions/adminControllerDto.AuthorizationResponsePayload'
+      tokens:
+        $ref: '#/definitions/tokenServiceDto.GenerateTokensResponse'
+    type: object
+  adminControllerDto.AuthorizationResponsePayload:
+    properties:
+      email:
+        type: string
+      fullname:
+        type: string
+      isActivated:
+        type: boolean
+    type: object
+  adminControllerDto.CreateAdminAccount:
+    properties:
+      email:
+        type: string
+      fullname:
+        type: string
+    type: object
+  adminControllerDto.VerifyActivationToken:
+    properties:
+      email:
+        type: string
+      token:
+        type: string
+    type: object
+  adminRepoDto.AdminAccountDto:
+    properties:
+      admin_email:
+        type: string
+      admin_fullname:
+        type: string
+      admin_id:
+        type: integer
+      is_activated:
+        type: boolean
+    type: object
+  debtorControllerDto.CreateDebtorBodyDto:
+    properties:
+      debtor_address:
+        type: string
+      debtor_category:
+        type: string
+      debtor_inn:
+        type: string
+      debtor_name:
+        type: string
+      debtor_ogrnip:
+        type: string
+      debtor_region:
+        type: string
+      debtor_snils:
+        type: string
+    type: object
+  debtorControllerDto.UpdateDebtorData:
+    properties:
+      debtor_address:
+        type: string
+      debtor_category:
+        type: string
+      debtor_id:
+        type: integer
+      debtor_inn:
+        type: string
+      debtor_name:
+        type: string
+      debtor_ogrnip:
+        type: string
+      debtor_region:
+        type: string
+      debtor_snils:
+        type: string
+    type: object
+  debtorMessageControllerDto.CreateDebtorMesBodyDto:
+    properties:
+      debtor_id:
+        type: integer
+      message_author:
+        type: string
+      message_type:
+        type: string
+      publishing_date:
+        type: string
+    type: object
+  debtorMessageDto.FindAllDebtorMesReturning:
+    properties:
+      count:
+        type: integer
+      messages:
+        items:
+          $ref: '#/definitions/debtorMessageDto.FindDebtorMesDto'
+        type: array
+    type: object
+  debtorMessageDto.FindDebtorMesDto:
+    properties:
+      debtor_name:
+        type: string
+      message_author:
+        type: string
+      message_id:
+        type: integer
+      message_type:
+        type: string
+      publishing_date:
+        type: string
+    type: object
+  debtorRepoDto.FindAllDebtorsReturning:
+    properties:
+      count:
+        type: integer
+      debtors:
+        items:
+          $ref: '#/definitions/models.Debtor'
+        type: array
+    type: object
+  models.Debtor:
+    properties:
+      debtor_address:
+        type: string
+      debtor_category:
+        type: string
+      debtor_id:
+        type: integer
+      debtor_inn:
+        type: string
+      debtor_name:
+        type: string
+      debtor_ogrnip:
+        type: string
+      debtor_region:
+        type: string
+      debtor_snils:
+        type: string
+    type: object
+  models.Message:
+    properties:
+      debtor_id:
+        type: integer
+      message_author:
+        type: string
+      message_id:
+        type: integer
+      message_type:
+        type: string
+      publishing_date:
+        type: string
+    type: object
+  tokenServiceDto.GenerateTokensResponse:
+    properties:
+      accessToken:
+        type: string
+      refreshToken:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: API Server for hackaton application that supplies service for operate
+    debtors in db
+  title: Tax Parser API
+  version: "0.4"
+paths:
+  /account/activate:
+    post:
+      consumes:
+      - application/json
+      description: Activates admins account by token that was sent to his email
+      parameters:
+      - description: Body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/adminControllerDto.ActivateAdminAccountDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/adminRepoDto.AdminAccountDto'
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "403":
+          description: Forbidden
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+      summary: Activate the account
+      tags:
+      - admin
+  /account/auth:
+    post:
+      consumes:
+      - application/json
+      description: Log in to activated account
+      parameters:
+      - description: Body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/adminControllerDto.AuthorizationResponse'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/adminRepoDto.AdminAccountDto'
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "403":
+          description: Forbidden
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+      summary: Log in to account
+      tags:
+      - admin
+  /account/create:
+    post:
+      consumes:
+      - application/json
+      description: Create a new unverified admin account and sends a message with
+        activation token to email
+      parameters:
+      - description: Body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/adminControllerDto.CreateAdminAccount'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/adminRepoDto.AdminAccountDto'
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "403":
+          description: Forbidden
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new admin account
+      tags:
+      - admin
+  /account/token/refresh:
+    post:
+      consumes:
+      - application/json
+      description: Refresh accessToken and refreshToken tokens
+      parameters:
+      - description: Body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/adminControllerDto.AuthorizationBody'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/tokenServiceDto.GenerateTokensResponse'
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "403":
+          description: Forbidden
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+      summary: Refresh tokens
+      tags:
+      - admin
+  /account/verify:
+    post:
+      consumes:
+      - application/json
+      description: Verifies activation token
+      parameters:
+      - description: Body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/adminControllerDto.VerifyActivationToken'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "403":
+          description: Forbidden
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+      summary: Verify activation token
+      tags:
+      - admin
+  /debtor/all:
+    get:
+      consumes:
+      - application/json
+      description: Find all debtors by queries
+      parameters:
+      - description: debtor's inn
+        in: query
+        name: inn
+        type: string
+      - description: debtor's snils
+        in: query
+        name: snils
+        type: string
+      - description: debtor's ogrnip
+        in: query
+        name: ogrnip
+        type: string
+      - description: debtor's fullname
+        in: query
+        name: name
+        type: string
+      - description: debtor's region
+        in: query
+        name: region
+        type: string
+      - description: debtor's address
+        in: query
+        name: address
+        type: string
+      - description: debtor's category
+        in: query
+        name: category
+        type: string
+      - description: current page to show
+        in: query
+        name: page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/debtorRepoDto.FindAllDebtorsReturning'
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+      summary: Find all debtors
+      tags:
+      - debtor
+  /debtor/create:
+    post:
+      consumes:
+      - application/json
+      description: Create a new debtor.
+      parameters:
+      - description: Body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/debtorControllerDto.CreateDebtorBodyDto'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Debtor'
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Create a debtor
+      tags:
+      - debtor
+  /debtor/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete debtor by id
+      parameters:
+      - description: debtor's id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              status:
+                type: integer
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Delete debtor
+      tags:
+      - debtor
+  /debtor/id:
+    get:
+      consumes:
+      - application/json
+      description: Find debtor by his id
+      parameters:
+      - description: debtor's id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Debtor'
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+      summary: Find debtor by id
+      tags:
+      - debtor
+  /debtor/update:
+    patch:
+      consumes:
+      - application/json
+      description: Update debtor's data stored in db
+      parameters:
+      - description: Update body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/debtorControllerDto.UpdateDebtorData'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Debtor'
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Update debtor data
+      tags:
+      - debtor
+  /message/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes message by id
+      parameters:
+      - description: message id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              status:
+                type: integer
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Delete message
+      tags:
+      - message
+    get:
+      consumes:
+      - application/json
+      description: Finds a debtor's message by id
+      parameters:
+      - description: message id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/debtorMessageDto.FindDebtorMesDto'
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+      summary: Finds a debtor's message by id
+      tags:
+      - message
+  /message/all:
+    get:
+      consumes:
+      - application/json
+      description: Returns all messages by queries
+      parameters:
+      - description: message date
+        in: query
+        name: date
+        type: string
+      - description: message type
+        in: query
+        name: type
+        type: string
+      - description: message author
+        in: query
+        name: author
+        type: string
+      - description: debtor's fullname
+        in: query
+        name: debtor
+        type: string
+      - description: current page to show
+        in: query
+        name: page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/debtorMessageDto.FindAllDebtorMesReturning'
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+      summary: Find messages
+      tags:
+      - message
+  /message/create:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new message to a debtor
+      parameters:
+      - description: Body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/debtorMessageControllerDto.CreateDebtorMesBodyDto'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Message'
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new message
+      tags:
+      - message
+  /message/update:
+    patch:
+      consumes:
+      - application/json
+      description: Updates debtor message
+      parameters:
+      - description: Body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.Message'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/debtorMessageDto.FindDebtorMesDto'
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+            type: object
+      summary: Update debtor message
+      tags:
+      - message
+swagger: "2.0"
