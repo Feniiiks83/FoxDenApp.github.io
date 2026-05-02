@@ -3,7 +3,7 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o /fox/foxDenApp ./cmd/foxDenApp/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o /fox/foxDenApp ./cmd/FoxDenApp/main.go
 
 FROM alpine:latest
 WORKDIR /fox
