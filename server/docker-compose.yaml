@@ -3,7 +3,7 @@ services:
   app:
     build: .
     ports:
-      - "3001:3001"
+      - "${APP_PORT}:${APP_PORT}"
     env_file:
       - .env
     depends_on:
@@ -11,9 +11,13 @@ services:
 
   db:
     image: postgres:15-alpine
+    restart: always
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: foxden
-    ports:
-      - "5432:5432"
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
