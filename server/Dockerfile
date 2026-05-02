@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 3001
 
-CMD ["go", "run", "./cmd/foxDenApp/main.go"]
+CMD ["go", "run", "./cmd/FoxDenApp/main.go"]
