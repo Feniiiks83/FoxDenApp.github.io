@@ -8,9 +8,9 @@ Dockerfile*
 .dockerignore
 
 # Секреты и окружение
-.env
-.env.*
-*.env
+# .env
+# .env.*
+# *.env
 
 # IDE и редакторы
 .idea/

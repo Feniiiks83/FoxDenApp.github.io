@@ -8,5 +8,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o /fox/foxDenApp ./cmd/F
 FROM alpine:latest
 WORKDIR /fox
 COPY --from=builder /fox/foxDenApp .
+COPY .env /fox
+COPY ./config/local.yaml fox/config/
 EXPOSE 3001
 CMD ["./foxDenApp"]
