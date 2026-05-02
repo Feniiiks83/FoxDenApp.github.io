@@ -1,0 +1,49 @@
+# Git
+.git
+.gitignore
+
+# Docker-файлы (они не нужны внутри образа)
+docker-compose*.yml
+Dockerfile*
+.dockerignore
+
+# Секреты и окружение
+.env
+.env.*
+*.env
+
+# IDE и редакторы
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# ОС и кэши
+.DS_Store
+Thumbs.db
+*.log
+logs/
+tmp/
+.cache/
+
+# Документация (не нужна в рантайме)
+*.md
+LICENSE
+CHANGELOG*
+README*
+
+# Сборочные артефакты
+bin/
+dist/
+build/
+*.exe
+*.dll
+*.so
+
+# Go специфика
+vendor/          # Go modules не требуют vendor, но если есть - исключаем
+go.work
+go.work.sum
