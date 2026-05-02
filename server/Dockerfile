@@ -1,14 +1,12 @@
-FROM golang:1.25-alpine AS builder
-WORKDIR /app
+FROM golang:latest
+
+WORKDIR /fox
+
 COPY go.mod go.sum ./
 RUN go mod download
-COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o /fox/foxDenApp ./cmd/FoxDenApp/main.go
 
-FROM alpine:latest
-WORKDIR /fox
-COPY --from=builder /fox/foxDenApp .
-COPY .env /fox
-COPY ./config/local.yaml fox/config/
+COPY . .
+
 EXPOSE 3001
-CMD ["./foxDenApp"]
+
+CMD ["go", "run", "./cmd/foxDenApp/main.go"]
