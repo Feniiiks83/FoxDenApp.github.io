@@ -18,7 +18,9 @@
 
 ```
 ![Скриншот приложения](./screenshots/screen1.jpg)
-
+<p align="center">
+  <img src="./screenshots/screen1.jpg" width="800" alt="Скриншот приложения">
+</p>
 ---
 
 ## ⚡ Ключевые возможности
