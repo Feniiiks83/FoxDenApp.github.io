@@ -19,7 +19,19 @@
 ---
 
 <p align="center">
-  <img src="./screenshots/screen1.jpg" width="200" alt="Скриншот приложения">
+  <img src="./screenshots/screen1.jpg" width="250" alt="Скриншот приложения">
+</p>
+<p align="center">
+  <img src="./screenshots/screen2.jpg" width="250" alt="Скриншот приложения">
+</p>
+<p align="center">
+  <img src="./screenshots/screen3.jpg" width="250" alt="Скриншот приложения">
+</p>
+<p align="center">
+  <img src="./screenshots/screen4.jpg" width="250" alt="Скриншот приложения">
+</p>
+<p align="center">
+  <img src="./screenshots/screen5.jpg" width="250" alt="Скриншот приложения">
 </p>
 
 ---
